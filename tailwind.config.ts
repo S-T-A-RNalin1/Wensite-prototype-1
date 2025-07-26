@@ -24,6 +24,14 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				'word-1': 'hsl(var(--word-color-1))',
+				'word-2': 'hsl(var(--word-color-2))',
+				'word-3': 'hsl(var(--word-color-3))',
+				'word-4': 'hsl(var(--word-color-4))',
+				'word-5': 'hsl(var(--word-color-5))',
+				'word-6': 'hsl(var(--word-color-6))',
+				'word-7': 'hsl(var(--word-color-7))',
+				'word-8': 'hsl(var(--word-color-8))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
