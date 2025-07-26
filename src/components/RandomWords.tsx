@@ -39,12 +39,32 @@ const RandomWords = () => {
   useEffect(() => {
     const generateWords = () => {
       const newWords: WordPosition[] = [];
-      const wordCount = Math.floor(Math.random() * 30) + 40; // 40-70 words
+      const wordCount = 25; // Reduced from 40-70 to 25 words
+
+      // Function to check if a position overlaps with existing words
+      const isOverlapping = (newTop: number, newLeft: number, existingWords: WordPosition[]) => {
+        const minDistance = 8; // Minimum distance between words (in percentage)
+        return existingWords.some(word => {
+          const distance = Math.sqrt(
+            Math.pow(newTop - word.top, 2) + Math.pow(newLeft - word.left, 2)
+          );
+          return distance < minDistance;
+        });
+      };
 
       for (let i = 0; i < wordCount; i++) {
         const word = wordList[Math.floor(Math.random() * wordList.length)];
-        const top = Math.random() * 100;
-        const left = Math.random() * 100;
+        let top, left;
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        // Try to find a non-overlapping position
+        do {
+          top = Math.random() * 90 + 5; // Keep words away from edges (5% margin)
+          left = Math.random() * 90 + 5;
+          attempts++;
+        } while (isOverlapping(top, left, newWords) && attempts < maxAttempts);
+
         const color = colors[Math.floor(Math.random() * colors.length)];
         const size = 2; // Fixed size of 2rem for all words
         const isClickable = Math.random() > 0.4; // 60% chance to be clickable
