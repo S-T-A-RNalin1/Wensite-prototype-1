@@ -44,8 +44,7 @@ const RandomWords = () => {
         const top = Math.random() * 100;
         const left = Math.random() * 100;
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const size = Math.random() * 3 + 1; // 1-4rem
-        const animation = animations[Math.floor(Math.random() * animations.length)];
+        const size = 2; // Fixed size of 2rem for all words
 
         newWords.push({
           text: word,
@@ -53,7 +52,7 @@ const RandomWords = () => {
           left,
           color,
           size,
-          animation,
+          animation: '', // No animations
           id: i
         });
       }
@@ -73,7 +72,7 @@ const RandomWords = () => {
       {words.map((word) => (
         <div
           key={word.id}
-          className={`absolute font-bold transition-all duration-500 ${word.animation} text-${word.color} pointer-events-auto cursor-pointer hover:scale-125 hover:text-accent`}
+          className={`absolute font-bold text-${word.color} pointer-events-auto cursor-pointer hover:text-accent`}
           style={{
             top: `${word.top}%`,
             left: `${word.left}%`,
