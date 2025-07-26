@@ -66,10 +66,7 @@ const RandomWords = () => {
 
     generateWords();
     
-    // Regenerate words every 10 seconds
-    const interval = setInterval(generateWords, 10000);
-    
-    return () => clearInterval(interval);
+    // No longer regenerating words automatically
   }, []);
 
   return (
