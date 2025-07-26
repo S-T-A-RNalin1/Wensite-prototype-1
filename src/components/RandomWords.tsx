@@ -9,6 +9,7 @@ interface WordPosition {
   animation: string;
   id: number;
   isClickable: boolean;
+  clickCount: number;
 }
 
 const RandomWords = () => {
@@ -56,7 +57,8 @@ const RandomWords = () => {
           size,
           animation: '', // No animations
           id: i,
-          isClickable
+          isClickable,
+          clickCount: 0
         });
       }
       setWords(newWords);
@@ -83,23 +85,26 @@ const RandomWords = () => {
           style={{
             top: `${word.top}%`,
             left: `${word.left}%`,
-            fontSize: `${word.size}rem`,
+            fontSize: `${word.size - (word.clickCount * 0.3)}rem`, // Decrease size by 0.3rem per click
             transform: 'translate(-50%, -50%)',
             textShadow: `0 0 20px currentColor`,
             userSelect: 'none'
           }}
           onClick={word.isClickable ? () => {
-            // Add click interaction - word disappears and reappears elsewhere
-            setWords(prev => prev.map(w => 
-              w.id === word.id 
-                ? {
-                    ...w,
-                    top: Math.random() * 100,
-                    left: Math.random() * 100,
-                    color: colors[Math.floor(Math.random() * colors.length)]
-                  }
-                : w
-            ));
+            // Increment click count and remove word after 5 clicks
+            setWords(prev => prev.map(w => {
+              if (w.id === word.id) {
+                const newClickCount = w.clickCount + 1;
+                if (newClickCount >= 5) {
+                  return null; // Mark for removal
+                }
+                return {
+                  ...w,
+                  clickCount: newClickCount
+                };
+              }
+              return w;
+            }).filter(Boolean) as WordPosition[]); // Remove null values
           } : undefined}
         >
           {word.text}
