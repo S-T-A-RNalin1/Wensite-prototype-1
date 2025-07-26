@@ -8,6 +8,7 @@ interface WordPosition {
   size: number;
   animation: string;
   id: number;
+  isClickable: boolean;
 }
 
 const RandomWords = () => {
@@ -45,6 +46,7 @@ const RandomWords = () => {
         const left = Math.random() * 100;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const size = 2; // Fixed size of 2rem for all words
+        const isClickable = Math.random() > 0.4; // 60% chance to be clickable
 
         newWords.push({
           text: word,
@@ -53,7 +55,8 @@ const RandomWords = () => {
           color,
           size,
           animation: '', // No animations
-          id: i
+          id: i,
+          isClickable
         });
       }
       setWords(newWords);
@@ -72,7 +75,11 @@ const RandomWords = () => {
       {words.map((word) => (
         <div
           key={word.id}
-          className={`absolute font-bold text-${word.color} pointer-events-auto cursor-pointer hover:text-accent`}
+          className={`absolute font-bold text-${word.color} ${
+            word.isClickable 
+              ? 'pointer-events-auto cursor-pointer hover:text-accent opacity-100' 
+              : 'pointer-events-none cursor-default opacity-60'
+          }`}
           style={{
             top: `${word.top}%`,
             left: `${word.left}%`,
@@ -81,7 +88,7 @@ const RandomWords = () => {
             textShadow: `0 0 20px currentColor`,
             userSelect: 'none'
           }}
-          onClick={() => {
+          onClick={word.isClickable ? () => {
             // Add click interaction - word disappears and reappears elsewhere
             setWords(prev => prev.map(w => 
               w.id === word.id 
@@ -93,7 +100,7 @@ const RandomWords = () => {
                   }
                 : w
             ));
-          }}
+          } : undefined}
         >
           {word.text}
         </div>
