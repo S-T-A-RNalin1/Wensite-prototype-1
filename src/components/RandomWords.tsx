@@ -94,9 +94,9 @@ const RandomWords = () => {
       {words.map((word) => (
         <div
           key={word.id}
-          className={`absolute font-bold text-${word.color} ${
+          className={`absolute font-bold text-white ${
             word.isClickable 
-              ? 'pointer-events-auto cursor-pointer hover:text-accent opacity-100' 
+              ? 'pointer-events-auto cursor-pointer opacity-100' 
               : 'pointer-events-none cursor-default opacity-60'
           }`}
           style={{
